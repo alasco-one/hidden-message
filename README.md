@@ -1,4 +1,4 @@
-# hidden-message
+# Hidden-message
 La solution va permettre de cacher ou de lire un message dans ou depuis un fichier png. 
 
 > **_NOTE:_**  Version du python de developpement --> python 3.8.5 64-bit
