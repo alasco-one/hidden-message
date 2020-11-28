@@ -1,5 +1,7 @@
 # hidden-message
 La solution va permettre de cacher ou de lire un message dans ou depuis un fichier png. 
+
+Version du python de developpement : python 3.8.5 64-bit
 ### Structure du project :
 Le projet est constitué uniquement de deux modules : #main.py et utilities.py#. Le module #main# contient les instructions nécessaire à l'éxecution et le module #utilities.py# contient les fonctions pour la réalistion des tâches.
 
