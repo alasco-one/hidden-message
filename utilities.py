@@ -186,40 +186,33 @@ def get_png_file(path):
     elle retourne le array en 2D et le dictionnaire info
     (str)->Array-2D, dict
 
-    >>> get_png_file("img/vscode.png")
-    <_io.TextIOWrapper name='img/vscode.png' mode='r' encoding='UTF-8'>
-    Shape : (900, 6400)
-    (array([[ 29,  29,  29, ...,  29,  29, 255],
+    >>> get_png_file("img/img.png")
+    (array([[108,  29,  29, ...,  29,  29, 255],
         [ 29,  29,  29, ...,  29,  29, 255],
         [ 29,  29,  29, ...,  29,  29, 255],
         ...,
         [ 31,  20,  29, ..., 125, 199, 255],
         [ 31,  20,  30, ..., 125, 199, 255],
-        [ 31,  20,  29, ..., 125, 199, 255]], dtype=uint16), {'greyscale': False, 'alpha': True, 'planes': 4, 'bitdepth': 8, 'interlace': 0, 'size': (1600, 900)})
-    >>> 
-
-    >>> get_png_file("img/original.png")
-    <_io.TextIOWrapper name='img/original.png' mode='r' encoding='UTF-8'>
-    Shape : (900, 6400)
-    (array([[ 29,  29,  29, ...,  29,  29, 255],
-        [ 29,  29,  29, ...,  29,  29, 255],
-        [ 29,  29,  29, ...,  29,  29, 255],
+        [ 31,  20,  29, ..., 125, 199, 255]], dtype=uint8), {'greyscale': False, 'alpha': True, 'planes': 4, 'bitdepth': 8, 'interlace': 0, 'size': (1600, 900)})
+    >>> get_png_file("img/3.png")
+    (array([[ 30,  30,  30, ..., 207, 200, 255],
+        [ 30,  30,  30, ..., 188, 143, 255],
+        [ 30,  30,  30, ..., 164, 111, 255],
         ...,
-        [ 31,  20,  29, ..., 125, 199, 255],
-        [ 31,  20,  30, ..., 125, 199, 255],
-        [ 31,  20,  29, ..., 125, 199, 255]], dtype=uint16), {'greyscale': False, 'alpha': True, 'planes': 4, 'bitdepth': 8, 'interlace': 0, 'size': (1600, 900)})
-    >>> 
-
-    >>> get_png_file("img/test.png")
-    <_io.TextIOWrapper name='img/test.png' mode='r' encoding='UTF-8'>
-    Shape : (900, 6400)
-    (array([[ 29,  29,  29, ...,  29,  29, 255],
-        [ 29,  29,  29, ...,  29,  29, 255],
-        [ 29,  29,  29, ...,  29,  29, 255],
-        ...,
-        [ 31,  20,  29, ..., 125, 199, 255],
-        [ 31,  20,  30, ..., 125, 199, 255],
-        [ 31,  20,  29, ..., 125, 199, 255]], dtype=uint16), {'greyscale': False, 'alpha': True, 'planes': 4, 'bitdepth': 8, 'interlace': 0, 'size': (1600, 900)})
+        [ 89,  87,  46, ...,  30,  30, 255],
+        [ 80, 138,  86, ...,  30,  30, 255],
+        [ 30,  30,  30, ...,  30,  30, 255]], dtype=uint8), {'greyscale': False, 'alpha': True, 'planes': 4, 'bitdepth': 8, 'interlace': 0, 'size': (51, 27)})
+    >>> get_png_file("img/test.txt")
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "<stdin>", line 11, in get_png_file
+    File "/home/alasco/.local/lib/python3.8/site-packages/png.py", line 1813, in read
+        self.preamble(lenient=lenient)
+    File "/home/alasco/.local/lib/python3.8/site-packages/png.py", line 1609, in preamble
+        self.validate_signature()
+    File "/home/alasco/.local/lib/python3.8/site-packages/png.py", line 1595, in validate_signature
+        raise FormatError("PNG file has invalid signature.")
+    png.FormatError: FormatError: PNG file has invalid signature.
     >>> 
     """
     reader = png.Reader(filename= path)
