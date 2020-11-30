@@ -1,7 +1,14 @@
 # Hidden-message
-La solution va permettre de cacher ou de lire un message dans ou depuis un fichier png. 
+Une application qui permet de cacher ou de lire un message dans ou depuis un fichier png. 
 
 > **_NOTE:_**  Version du python de developpement --> python 3.8.5 64-bit
+
+## Utilisation :
+En ayant python3 installé sur sa machine, on peut utiliser l'application de le manière suivante : 
+-python3 main.py -w -t "<Un message>" <chemin du fichier PNG>  : Pour cacher **<Un message>** dans le fichier PNG
+-python3 main.py -w -f <chemin du fichier texte> <chemin du fichier PNG> : Pour cacher le contenu du fichier texte dans le fichier PNG
+-python3 main.py -w <chemin du fichier PNG> : Pour cacher le contenu du fichier texte tapé depuis l'entré standard vers le fichier PNG
+-python3 main.py <chemin du fichier PNG> : Pour trouver un message caché dans le fichier PNG
 
 
 ### Structure du project :
