@@ -1,11 +1,40 @@
 
-import png
-import numpy
+import png, subprocess
+#from  import run, PIPE
+
+#import numpy
 
 #Le symbole de la fin du message 
 END_OF_MESSAGE = "#FIN#"
 # le decalage de pixel lors du hidding et du finding pour le 'effet ne soit pas si visible
 OFFSET = 600
+
+a = [
+        [1,3, 2, 3], [2,4,3, 4]
+    ]
+def size_2D(array_2D):
+    """
+    docstring
+    Fonction qui permet de retrouver le nombre d'element d'un array de 2D
+    (list(list))-> number
+    >>> a = [
+    ...         [1,3], [2,4], [3, 4]
+    ...     ]
+    >>> size_2D(a)
+    6
+    >>> a = [
+    ...         [1,3, 2, 3], [2,4,3, 4]
+    ...     ]
+    >>> size_2D(a)
+    8
+    >>> a = [
+    ...         [1], [2]
+    ...     ]
+    >>> size_2D(a)
+    2
+    >>> 
+    """
+    return len(array_2D)*len(array_2D[0])
 
 def check(png_2d, msg):
     """
@@ -14,7 +43,7 @@ def check(png_2d, msg):
 
     (Array_2D, str) raise Exception -> NoneType
     """
-    if (png_2d.size/OFFSET) <= (len(msg) + len(END_OF_MESSAGE))*2 :
+    if (size_2D(png_2d)/OFFSET) <= (len(msg) + len(END_OF_MESSAGE))*2 :
         raise Exception("Message Trop Long !")
 
 def save_to_png(png_2d, path, info):
@@ -48,6 +77,70 @@ def compound_byte(high, low):
     """
     return 256*high + low
 
+def shape_2D(array_2D):
+    """
+    docstring
+    FOnction qui permet de retrouver le shape d'un tableau à deux dimensions
+    (list(list)) -> tuple
+    >>> a = [
+    ...         [1], [2]
+    ...     ]
+    >>> shape_2D(a)
+    (2, 1)
+    >>> a = [
+    ...         [1,3], [2,4], [3, 4]
+    ...     ]
+    >>> shape_2D(a)
+    (3, 2)
+    >>> a = [
+    ...         [1,3, 2, 3], [2,4,3, 4]
+    ...     ]
+    >>> shape_2D(a)
+    (2, 4)
+    >>>
+    """
+    return (len(array_2D), len(array_2D[0]))
+
+def set_value_2D(array_2D, index, value):
+    """
+    docstring
+    Fonction qui permet de parcourir la matrice et de modifier l'element correspondant à l'index
+    (list(list), tuple, number) -> NoneType
+    >>> a
+    [[1, 3, 2, 3], [2, 4, 3, 4]]
+    >>> set_value_2D(a, (0, 0), 0)
+    >>> a
+    [[0, 3, 2, 3], [2, 4, 3, 4]]
+    >>> set_value_2D(a, (0, 3), 0)
+    >>> a
+    [[0, 3, 2, 0], [2, 4, 3, 4]]
+    >>> set_value_2D(a, (1, 1), 1)
+    >>> a
+    [[0, 3, 2, 0], [2, 1, 3, 4]]
+    >>> 
+    """
+    array_2D[index[0]][index[1]] = value
+
+def get_index_2D(array_2D, index):
+    """
+    docstring
+    Fonction qui permet de parcourir la matrice et de retourner l'element correspondant à l'index
+    (list(list), tuple) -> number
+    >>> a
+    [[1, 3, 2, 3], [2, 4, 3, 4]]
+    >>> get_index_2D(a, (0, 0)
+    ... )
+    1
+    >>> get_index_2D(a, (0, 2)
+    ... )
+    2
+    >>> get_index_2D(a, (1, 3))
+    4
+    >>> 
+    """
+    if index[0]>=len(array_2D) or index[1]>=len(array_2D[0] ):
+        raise Exception("Index Incorrect")
+    return array_2D[index[0]][index[1]]
 
 def find(png_2d):
     """
@@ -59,22 +152,21 @@ def find(png_2d):
     index=(0,0)
     msg = ""
     while END_OF_MESSAGE not in msg:
-        low = png_2d[index]
-        index, end = next_index(shape=png_2d.shape, current_index = index)
+        low = get_index_2D(png_2d, index)
+        index, end = next_index(shape=shape_2D(png_2d), current_index = index)
         #lors qu'on finie de lire tous les pixels
-        if end : break
+        if end : 
+            raise Exception("Aucun message trouvé dans le fichier")
 
-        high = png_2d[index]
+        high = get_index_2D(png_2d, index)
 
         msg+=chr(compound_byte(high = high, low = low))
 
-        index, end = next_index(shape=png_2d.shape, current_index = index)
+        index, end = next_index(shape=shape_2D(png_2d), current_index = index)
         
         #lors qu'on finie de lire tous les pixels
-        if end : break
-
-
-
+        if end : 
+            raise Exception("Aucun message trouvé dans le fichier")
         
     return msg
 
@@ -84,6 +176,7 @@ def format(msg):
 
     Fonction qui permet de formater le message trouvé dans le fichier PNG
     Elle enlève le message de FIN
+    On l'affiche à l'aide de strings de Unix et retourne la chaine de caractère
 
     (str) -> str
 
@@ -95,13 +188,17 @@ def format(msg):
     'alassane Mariko    '
     >>> 
     """
+    inter = ""
     if END_OF_MESSAGE in msg:
-        inter = ""
         for i in range(len(msg)-len(END_OF_MESSAGE)):
            inter+=msg[i]
-        return inter 
     else:
-        return msg
+        inter = msg
+
+
+    p = subprocess.run(['strings'], stdout = subprocess.PIPE,
+            input=inter, encoding='utf-8')
+    return p.stdout
 
 def hide(png_2d, msg):
     """
@@ -113,10 +210,10 @@ def hide(png_2d, msg):
     msg+=END_OF_MESSAGE
     index = (0,0)
     for x in msg : 
-        png_2d[index] = low_byte(ord(x))
-        index, _ = next_index(shape = png_2d.shape, current_index = index)
-        png_2d[index] = high_byte(ord(x))
-        index, _ = next_index(shape = png_2d.shape, current_index = index)
+        set_value_2D(png_2d, index, low_byte(ord(x)))  
+        index, _ = next_index(shape = shape_2D(png_2d), current_index = index)
+        set_value_2D(png_2d, index, high_byte(ord(x)))
+        index, _ = next_index(shape = shape_2D(png_2d), current_index = index)
     return png_2d
 
 
@@ -223,4 +320,4 @@ def get_png_file(path):
         png_2d.append(x)
     #print("Shape : ( {}, {} ) info : {}".format( len(png_2d), len(png_2d[0]), png_tuple[3]))
     
-    return numpy.array(png_2d), png_tuple[3]
+    return png_2d, png_tuple[3]
