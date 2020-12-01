@@ -58,7 +58,8 @@ def save_to_png(png_2d, path, info):
         greyscale= info["greyscale"], planes=info["planes"],  
         alpha=info["alpha"], interlace= info["interlace"])
 
-    pngWriter.write(open(path, "wb"), png_2d)
+    with open(path, "wb") as target:
+        pngWriter.write(target, png_2d)
 
 
 def compound_byte(high, low):

@@ -29,8 +29,8 @@ if args.writting :
         # Dans ce cas ci le file name a été defini
         # On doit donc utiliser le contenu du fichier "file"
         print("File specified : {}".format(args.file))
-        f = open(args.file,'r')
-        msg=f.read()
+        with open(args.file,'r') as target: 
+            msg=target.read()
 
     elif args.text:
         # Dans ce cas ci le file name a été defini
