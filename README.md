@@ -29,20 +29,20 @@ Maintenant, pour trouver un message depuis une fichier image PNG, on procède co
 
 ### Application :
 On va cacher le message contenu dans le fichier suivant dans notre image Png:
-![Text](text.png)
+![Text](https://github.com/alasco-one/hidden-message/blob/main/img/text.png)
 
 Voici notre fichier png :
-![Text](test.png)
+![Text](https://github.com/alasco-one/hidden-message/blob/main/img/test.png)
 
 On exécute la commande suivante pour cacher le contenu du fichier test.txt dans le fichier png : 
-![Write](write.png)
+![Write](https://github.com/alasco-one/hidden-message/blob/main/img/write.png)
 
 On lit message caché en exécutant la commande suivante :
-![Write](read.png)
+![Write](https://github.com/alasco-one/hidden-message/blob/main/img/read.png)
 
 Et voici l'etat du fichier test.png après l'operation.
 
-![after](after.png)
+![after](https://github.com/alasco-one/hidden-message/blob/main/img/after.png)
 
 
 
