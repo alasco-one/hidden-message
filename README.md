@@ -26,3 +26,28 @@ Maintenant, pour trouver un message depuis une fichier image PNG, on procède co
 - Pour chaque elements corresondant à notre message, on récupère le l'octet de poids fort et l'octet de poids faible
 - On les combine et avec la fontion **chr** de python, on trouve l'equivalent ascii qu'on concatène à une chaine de caractère qui constitue le message lu
 - On continue cette procédure jusqu'à retrouver la chaine de caractère **\#FIN\#**.
+
+### Application :
+On va cacher le message contenu dans le fichier suivant dans notre image Png:
+![Text](text.png)
+
+Voici notre fichier png :
+![Text](test.png)
+
+On exécute la commande suivante pour cacher le contenu du fichier test.txt dans le fichier png : 
+![Write](write.png)
+
+On lit message caché en exécutant la commande suivante :
+![Write](read.png)
+
+Et voici l'etat du fichier test.png après l'operation.
+
+![after](after.png)
+
+
+
+
+
+
+
+
